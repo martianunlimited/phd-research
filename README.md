@@ -12,15 +12,15 @@ Also not included are the weights for the deep neural networks, and the image, a
 - Imagenet ILSVRC 2012 : 
 - Images: 
 - Audio:
-.- Danse Arabe :-
-.- Nature sounds :-
-.- Human Speech :-
+  - Danse Arabe :-
+  - Nature sounds :-
+  - Human Speech :-
 - UCI datasets:
-.- ARCENE :-
-.- DEXTER :-
-.- DOROTHEA :-
-.- GISETTE :-
-.- MADELON :-
+  - ARCENE :-
+  - DEXTER :-  
+  - DOROTHEA :-
+  - GISETTE :-
+  - MADELON :-
 
 The folder _Utility_ contains helper codes that should be included via the addpath command. Details for the codes in this folder are as descibed in the next section
 Other folders organizes the codes by the chapters they are used in including codes used for analysis and not discussed anywhere in the thesis. 
