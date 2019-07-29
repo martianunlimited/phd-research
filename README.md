@@ -3,24 +3,24 @@ Matlab and Python files for PhD topic "Ensemble Learning of High Dimensional Dat
 
 ## Matlab
 This folder contains the files to reproduce the results and figures in "Ensemble Learning of High Dimensional Datasets". External codes are not included in the repository but can be downloaded from their original sources. The external codes include
-- Linear Discriminant Analysis by 
-- L1-Magic by Candes, 
-- MatConvNet by
+- Linear Discriminant Analysis https://www.mathworks.com/matlabcentral/fileexchange/29673-lda-linear-discriminant-analysis
+- L1-Magic https://statweb.stanford.edu/~candes/l1magic/
+- MatConvNet http://www.vlfeat.org/matconvnet/
 
 Also not included are the weights for the deep neural networks, and the image, audio and the UCI datasets. These however can be downloaded from
-- Deep Neural Network Weights :
-- Imagenet ILSVRC 2012 : 
-- Images: 
+- Deep Neural Network Weights : http://www.vlfeat.org/matconvnet/pretrained/
+- Imagenet ILSVRC 2012 : http://www.image-net.org/challenges/LSVRC/2012/
+- Images: http://sipi.usc.edu/database/
 - Audio:
-  - Danse Arabe :-
-  - Nature sounds :-
-  - Human Speech :-
+  - Danse Arabe :- https://freesound.org/people/FreqMan/sounds/42956/
+  - Nature sounds :- https://freesound.org/people/IchBinChrist/sounds/424288/
+  - Human Speech :- https://freesound.org/people/tim.kahn/sounds/71744/
 - UCI datasets:
-  - ARCENE :-
-  - DEXTER :-  
-  - DOROTHEA :-
-  - GISETTE :-
-  - MADELON :-
+  - ARCENE :- https://archive.ics.uci.edu/ml/datasets/Arcene
+  - DEXTER :-  https://archive.ics.uci.edu/ml/datasets/Dexter
+  - DOROTHEA :- https://archive.ics.uci.edu/ml/datasets/Dorothea
+  - GISETTE :- https://archive.ics.uci.edu/ml/datasets/Gisette
+  - MADELON :- https://archive.ics.uci.edu/ml/datasets/Madelon
 
 The folder _Utility_ contains helper codes that should be included via the addpath command. Details for the codes in this folder are as descibed in the next section
 Other folders organizes the codes by the chapters they are used in including codes used for analysis and not discussed anywhere in the thesis. 
@@ -47,4 +47,11 @@ Codes in this folder requires the images and audio dataset, as well as L1-Magic
 
 ### FP - Chapter 5
 - badFlipWrapper : Wrapper around badFlip_ for organizing the flipping probability and plotting the figures 
-- 
+- fpEnsExeriment
+
+### Ens - Chapter 6
+
+### DNN - Chapter 7
+
+## Python
+These are helper scripts for processing and training neural network, required modules include numpy, scipy, matplotlib, keras, tensorflow.
