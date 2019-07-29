@@ -1,3 +1,9 @@
+%% processResults*.m are helper scripts to ensemble the Saccades using various methods
+% results reported are from processResult_alexNet.m,
+% processResults_GoogLeNet.m, processResults_r50.m and
+% processResults_r152.m 
+% This file ensembles the results using simple majority vote for GoogLeNet
+
 modelPath = 'data/models/imagenet-googlenet-dag.mat' ;
 lines = dataread('file', 'ILSVRC2012_validation_ground_truth.txt', '%s', 'delimiter', '\n', 'bufsize', 655350);
 obs=length(lines)
@@ -31,19 +37,19 @@ for i=1:obs
 end
 soln=cell2mat(metaMap(soln'));
 
-subspaces=[450 410 370 384 256];
+subspaces=[450 430 410 390 370 350 330 310 290 270 250 200 150];
 ls run*;
 
 noSubspace=size(subspaces,2);
-zCount=1
-ensSize=9;
-records=zeros(zCount,6,ensSize,noSubspace);
-records2=zeros(zCount,6,ensSize,noSubspace);
-for zi=1:zCount
-    directories=101:109;
+
+ensSize=15;
+records=zeros(50,6,ensSize,noSubspace);
+records2=zeros(50,6,ensSize,noSubspace);
+for zi=1:50
+    directories=1:25;
     noDir=size(directories,2);
 
-%directories=directories(randperm(noDir));
+directories=directories(randperm(noDir));
 counter=0;
  for k=1:noSubspace
      
@@ -57,32 +63,32 @@ best=sparse(50000,1000);
      directory=directories(j);
 
     
-filename=sprintf('resnet50/run_%d/result_%d.mat',directory,subspace);
+filename=sprintf('googlenet2/run_%d/result_%d.mat',directory,subspace);
 
 load(filename, 'results');
 
-results(19877,11,2)=1000;
-results(19877,11,4)=1000;
-results(19877,11,6)=1000;
-results(19877,11,8)=1000;
-results(19877,11,10)=1000;
+results(19877,2)=1000;
+results(19877,4)=1000;
+results(19877,6)=1000;
+results(19877,8)=1000;
+results(19877,10)=1000;
 
-best2=sparse([1:50000],results(:,11,2),results(:,11,3));
+best2=sparse([1:50000],results(:,2),results(:,3));
 best=best+best2;
-best2=sparse([1:50000],results(:,11,4),results(:,11,5));
+best2=sparse([1:50000],results(:,4),results(:,5));
 best=best+best2;
-best2=sparse([1:50000],results(:,11,6),results(:,11,7));
+best2=sparse([1:50000],results(:,6),results(:,7));
 best=best+best2;
-best2=sparse([1:50000],results(:,11,8),results(:,11,9));
+best2=sparse([1:50000],results(:,8),results(:,9));
 best=best+best2;
-best2=sparse([1:50000],results(:,11,10),results(:,11,11));
+best2=sparse([1:50000],results(:,10),results(:,11));
 best=best+best2;
-top1=sum(results(:,11,1)==1);
-top2=sum(results(:,11,1)==2);
-top3=sum(results(:,11,1)==3);
-top4=sum(results(:,11,1)==4);
-top5=sum(results(:,11,1)==5);
-top6=sum(results(:,11,1)>5);
+top1=sum(results(:,1)==1);
+top2=sum(results(:,1)==2);
+top3=sum(results(:,1)==3);
+top4=sum(results(:,1)==4);
+top5=sum(results(:,1)==5);
+top6=sum(results(:,1)>5);
 
 myResult=zeros(50000,5);
 for(i=1:50000)
@@ -283,9 +289,9 @@ records;
 records2;
 end
 
-top1=reshape(sum(records(:,1,:,:),2),zCount,ensSize,noSubspace);
-top3=reshape(sum(records(:,1:3,:,:),2),zCount,ensSize,noSubspace);
-top5=reshape(sum(records(:,1:5,:,:),2),zCount,ensSize,noSubspace);
+top1=reshape(sum(records(:,1,:,:),2),50,ensSize,noSubspace);
+top3=reshape(sum(records(:,1:3,:,:),2),50,ensSize,noSubspace);
+top5=reshape(sum(records(:,1:5,:,:),2),50,ensSize,noSubspace);
 
 meanT1=(mean(top1,1)/49999 * 100)
 meanT3=(mean(top3,1)/49999 * 100)
@@ -294,3 +300,5 @@ meanT5=(mean(top5,1)/49999 * 100)
 stdT1=std(top1,1)/49999 * 100;
 stdT3=std(top3,1)/49999 * 100;
 stdT5=std(top5,1)/49999 * 100;
+
+

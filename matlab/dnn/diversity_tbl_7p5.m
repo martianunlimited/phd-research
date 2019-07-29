@@ -1,3 +1,6 @@
+%% Calculates the diversity measures between the base classifier and the saccade views 
+% Table 7.5
+
 dirnames={'alexnet', 'googlenet', 'resnet50','resnet152'}
 obs=50000;
 subspaces=[450 430 410 390 370 350 330 310 290 270 250 200 150];
