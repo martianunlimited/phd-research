@@ -32,12 +32,12 @@ UUT2=0;
 
 
 
-data=load('arcene_train.data');
-y=load('arcene_train.labels');
-tData=load('arcene_valid.data');
-yTest=load('arcene_valid.labels');
-vData=load('arcene_valid.data');
-yVal=load('arcene_valid.labels');
+data=load('../dataset/UCI/arcene_train.data');
+y=load('../dataset/UCI/arcene_train.labels');
+tData=load('../dataset/UCI/arcene_valid.data');
+yTest=load('../dataset/UCI/arcene_valid.labels');
+vData=load('../dataset/UCI/arcene_valid.data');
+yVal=load('../dataset/UCI/arcene_valid.labels');
 
 
 d=size(data,2);

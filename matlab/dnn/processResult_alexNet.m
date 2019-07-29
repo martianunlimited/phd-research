@@ -1,5 +1,5 @@
 %% processResults*.m are helper scripts to ensemble the Saccades using various methods
-% results reported are from processResult_Alexnet.m,
+% results reported are from processResult_alexNet.m,
 % processResults_GoogLeNet.m, processResults_r50.m and
 % processResults_r152.m 
 % This file ensembles the results using simple majority vote on AlexNet

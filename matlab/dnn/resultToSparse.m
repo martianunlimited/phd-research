@@ -1,3 +1,5 @@
+%% Helper script to results into a sparse matrix for processing (used with python)
+
 dirnames={'alexnet', 'googlenet', 'resnet50', 'resnet152'}
 
 subspaces=[450 430 410 390 370 350 330 310 290 270 250 200 150];

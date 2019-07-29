@@ -15,7 +15,7 @@
 % fileCount: count the number of distinct files 
 % fileRepeat: number of runs each files should be repeated
 
-files=dir('*.all');
+files=dir('../dataset/UCI/dorothea*.data');
 fileCount=size(files,1);
 fileRepeat=5;
 
@@ -108,7 +108,7 @@ for fileRuns=1:fileRepeat
 % lines: stores the file into the memory, seperated by newline         
 % obs: counts the number of records
 % S: stores the data as a sparse binary matrix
-        lines = dataread('file', fileName, '%s', 'delimiter', '\n', 'bufsize', 655350);
+        lines = dataread('file', ['../dataset/UCI/' fileName], '%s', 'delimiter', '\n', 'bufsize', 655350);
         obs=length(lines)
         S=sparse(100000,obs);
 

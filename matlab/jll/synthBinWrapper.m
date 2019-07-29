@@ -1,33 +1,37 @@
+%% Wrapper to generate the results for figure 4.2, this code fixes bugs from the old code 
+% Todo: we still use subplot instead of createaxes to create the array of
+% plots, it may be worth the time to rewrite this code with createAxes if
+% we need to run more experiments with syntetic data
+
+%Setup the run parameters
 prob=[0.0001 0.002 0.02 0.035 0.05 0.10 0.15 0.25 0.5];
 dim=100000;
-
 probCount=size(prob,2);
 subspaces=[5 7 10 15 25 35 50 70 100 150 250 350 500 700 1000 1500 2500 3500 5000 7000 10000 15000 25000 35000 50000 70000 100000];
 subspaceCount=size(subspaces,2);
-obs=10;
-
+obs=100;
 epsilons=[0.05 0.1 0.2 0.5 1];
 epsilonCount=size(epsilons,2);
+
+% Initialize storate, hsub* are not used, we wanted to see if householder
+% transforms can significantly improve the norm preservation on sparser
+% data and we found that while it helped. The improvement wasn't anything
+% we could use to justify the increased runtime or complexity
+
 subspaceStat=zeros(probCount,subspaceCount,4);
 hsubspaceStat=zeros(probCount,subspaceCount,4);
-
 subspaceInt=zeros(probCount,subspaceCount,3);
 hsubspaceInt=zeros(probCount,subspaceCount,3);
-fileNo=0;
-
 normSub=zeros(probCount,subspaceCount,obs*(obs-1)/2);
 normHSub=zeros(probCount,subspaceCount,obs*(obs-1)/2);
-
 subspaceProb=zeros(probCount,subspaceCount,epsilonCount);
 hsubspaceProb=zeros(probCount,subspaceCount,epsilonCount);
 
 for probNo=1:probCount
     baseProb=prob(probNo)
     dim=100000;
-        
 
-  
-        
+%Generate data using binRandGen    
 S=binRandGen(baseProb,dim,obs);
 dim=size(S,1);
 obs=size(S,2);
@@ -82,6 +86,8 @@ end
 
 
 end
+
+%Initialize the plots and plot the results
 
 bern=zeros(probCount,subspaceCount,epsilonCount);
 hoff=zeros(probCount,subspaceCount,epsilonCount);

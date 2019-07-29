@@ -1,3 +1,5 @@
+%% Helper script to plot the surface graphs figure 7.5
+
 [X2,Y2]=meshgrid(1:ensSize,subspaces);
 [X,Y]=meshgrid(1:ensSize,subspaces);
 [X1,Y1]=meshgrid(1:ensSize,subspaces);
@@ -15,6 +17,9 @@ top1Res152=reshape(recordsResnet152(1,1,1:ensSize,:,:),ensSize,noSubspace)/49999
 top3Res152=reshape(sum(recordsResnet152(1,1:3,1:ensSize,:,:)),ensSize,noSubspace)/49999
 top5Res152=reshape(sum(recordsResnet152(1,1:5,1:ensSize,:,:)),ensSize,noSubspace)/49999
 
+%% Values obtained from base simulation 
+% TODO: rather than hardcode the values, process the base simulation and
+% calculate them. 
 baseAlexTop1=27348/49999
 baseGoogleTop1=32731/49999
 baseResTop1=35192/49999
@@ -27,8 +32,12 @@ baseGoogleTop3=(32731+5883+2494)/49999
 baseRes152Top1=36225/49999
 baseRes152Top3=(36225+5301+1997)/49999
 baseRes152Top5=(36225+5301+1997+1066+738)/49999
-figure
 
+%% Surface plotting loop, 
+% We plot the reference plane twice to darken the plane while keeping it translucent. 
+% This is a stop gap approach that works well enough.
+
+figure
 subplot(4,3,1)
 surf(X2,Y2,top1Alex')
 hold on

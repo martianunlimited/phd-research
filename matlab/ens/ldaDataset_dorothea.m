@@ -30,7 +30,7 @@ U4=0;
 UUT2=0;
 classImba=316/34;
 
-fileName='dorothea_train.data';
+fileName='../dataset/UCI/dorothea_train.data';
         lines = dataread('file', fileName, '%s', 'delimiter', '\n', 'bufsize', 655350);
         obs=length(lines)
         data=zeros(obs,100000);
@@ -45,7 +45,7 @@ fileName='dorothea_train.data';
 indices=1:100000;
 nzVarIndex=indices(sum(data,1)>0);
         
-fileName='dorothea_valid.data';
+fileName='../dataset/UCI/dorothea_valid.data';
         lines = dataread('file', fileName, '%s', 'delimiter', '\n', 'bufsize', 655350);
         obs=length(lines)
         tData=zeros(obs,100000);
@@ -63,9 +63,9 @@ data=data(:,nzVarIndex);
 vData=vData(:,nzVarIndex);
 
 
-y=load('dorothea_train.labels');
-yTest=load('dorothea_valid.labels');
-yVal=load('dorothea_valid.labels');
+y=load('../dataset/UCI/dorothea_train.labels');
+yTest=load('../dataset/UCI/dorothea_valid.labels');
+yVal=load('../dataset/UCI/dorothea_valid.labels');
 d=size(data,2);
 %UUT2=mean(sum(wRot.^2.*tData.^2,2)*d);
 baseW=zeros(1,d);

@@ -1,4 +1,4 @@
-runGaussian=0;
+runGaussian=1;
 for runType=1:5
 if runType==4
     qScales=[1/2 2/3 3/4];
@@ -8,9 +8,12 @@ end
 for qScale=qScales
 for uFactor=[1 2 5 10]
 %thetaRun=[1:50]*pi/100;
-runs=10000;
-oRun=[0 -3 -5];
-d=1000;
+%runs=10000
+runs=100;
+%oRun=[0 -3 -5];
+oRun=[-7 -6 -5 -3 -2 -1 0 1 2]
+d=100
+%d=1000;
 theta=pi/3;
 density=0;
 kRun=[1 5 10 20 50 100];

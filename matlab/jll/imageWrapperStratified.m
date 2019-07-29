@@ -1,15 +1,15 @@
 
 %Define definition of the run, including range of subspaces, files to run,
 %number of pairs of vectors, window size and number of random windows
-files=dir('*.tiff');
+files=dir('../dataset/image/*.tiff');
 fileCount=size(files,1);
-runCount=500;
+runCount=50;
 windSize=50;
 clusters=[1 7];
 clusterCount=size(clusters,2);
 subspaces=[5 10 20 35 50 75 100 150 200 350 500 700];
 subspaceCount=size(subspaces,2);
-pairs=100;
+pairs=10;
 
 tic;
 
@@ -47,7 +47,7 @@ normSRX=zeros(fileCount, subspaceCount, pairs*(pairs-1)/2);
 for fileNo=1:1:fileCount
 % Loop through each file and store data as a data matrix
 filename=files(fileNo).name
-X=imread(filename);
+X=imread(['../dataset/image/' filename]);
 X=double(X);
 sqrt(max(max(X.^2/mean(mean(X.^2)))))
 
@@ -158,204 +158,174 @@ for l=1:clusterCount
 end
 
 end
-
-avgRPStat=mean(RPStat,1);
-avgSRPStat=mean(SRPStat,1);
-avgSubspaceStat=mean(subspaceStat,1);
-avgHSubspaceStat=mean(hsubspaceStat,1);
-%avgPCAStat=mean(PCAStat,1);
-
-avgRPInt=mean(RPInt,1);
-avgSRPInt=mean(SRPInt,1);
-avgSubspaceInt=mean(subspaceInt,1);
-avgHSubspaceInt=mean(hsubspaceInt,1);
-%avgPCAInt=mean(PCAInt,1);
-
-figure;
-subplot(2,2,1);
-pr1=plot(subspaces, avgRPInt(1,:,[1]),'r:');
-hold on
-pr2=plot(subspaces, avgRPStat(1,:,1),'r.:');
-pr3=plot(subspaces, avgRPInt(1,:,[3]),'r:');
-hold off
-
-subplot(2,2,2);
-ps1=plot(subspaces, avgSubspaceInt(1,:,[1]),'b:');
-hold on;
-ps2=plot(subspaces, avgSubspaceStat(1,:,1),'b+:');
-ps3=plot(subspaces, avgSubspaceInt(1,:,[3]),'b:');
-hold off;
-
-subplot(2,2,3);
-%ppc1=plot(subspaces, avgPCAInt(1,:,[1]),'g:');
-hold on;
-%ppc2=plot(subspaces, avgPCAStat(1,:,1),'go:');
-%ppc3=plot(subspaces, avgPCAInt(1,:,[3]),'g:');
-hold off;
-
-subplot(2,2,4);
-psr1=plot(subspaces, avgSRPInt(1,:,[1]),'m:');
-hold on;
-psr2=plot(subspaces, avgSRPStat(1,:,1),'mx:');
-psr3=plot(subspaces, avgSRPInt(1,:,[3]),'m:');
-hold off;
-
-%phs1=plot(subspaces, avgHSubspaceInt(1,:,[1]),'b:');
-%phs2=plot(subspaces, avgHSubspaceStat(1,:,1),'b+:');
-%phs3=plot(subspaces, avgHSubspaceInt(1,:,[3]),'b:');
-
-% %pp1=plot(subspaces, pcaInt(:,[1 3]),'m:');
-% %pp2=plot(subspaces, pcaInt(:,2),'mx:');
-
-title('95% bounds for various projections');
-legend([pr2 ps2 ppc2 psr2],'Gaussian','Subspace','PCA','Achlioptas');
-hold off;
- figure
-
-     centers=0.49:0.01:1.51;
-     normPCAT=reshape(permute(normPCA,[2 1 3]),1,size(subspaces,2),[]);
-     normSubT=reshape(permute(normPX,[2 1 3]),1,size(subspaces,2),[]);
-     normRPT=reshape(permute(normRX,[2 1 3]),1,size(subspaces,2),[]);
-     normSRPT=reshape(permute(normSRX,[2 1 3]),1,size(subspaces,2),[]);
-     normHSubT=reshape(permute(normHPX,[2 1 3]),1,size(subspaces,2),[]);
-     
-      [PXNHist, binCenter1]=hist(reshape(normSubT(1,20,:),1,[]),centers);
-      [RXNHist, binCenter2]=hist(reshape(normRPT(1,20,:),1,[]),centers);
-      [PCANHist, binCenter3]=hist(reshape(normPCAT(1,20,:),1,[]),centers);
-% %      [PCANHist, binCenter4]=hist(normPCA,centers);
-      [SRXNHist, binCenter5]=hist(reshape(normSRPT(1,20,:),1,[]),centers);
-      [HPXNHist, binCenter6]=hist(reshape(normHSubT(1,20,:),1,[]),centers);
-      
-         plot(binCenter1,PXNHist, 'b-');
-         hold on;
-         title(['Number of projections ',num2str(subspaces(20))]);
-         plot(binCenter2,RXNHist, 'r-');
-         plot(binCenter3,PCANHist, 'g-');
-         plot(binCenter5,SRXNHist, 'm-');
-         plot(binCenter6,HPXNHist, 'c-');
-% %       plot(binCenter4,PCANHist, 'm-');
-         grid on;
-         legend('subspace','gaussian','PCA','Achlioptas', 'Householder');
-         hold off;
-         figure
-
-
-   avgRPRunTime=mean(rpRunTime,1);
-avgSRPRunTime=mean(srpRunTime,1);
-avgSubspaceRunTime=mean(subspaceRunTime,1);
-avgHSubspaceRunTime=mean(hsubspaceRunTime,1);
-
-avgPCARunTime=mean(pcaRunTime,1)+mean(PCATime);
-figure
-
-pr1=plot(subspaces, avgRPRunTime,'k-s');
-hold on
-title(['Runtime vs Projections ']);
-ps1=plot(subspaces, avgSubspaceRunTime,'k-o');
-ppc1=plot(subspaces, avgPCARunTime,'k-+');
-psr1=plot(subspaces, avgSRPRunTime,'k-*');
-%phs1=plot(subspaces, avgHSubspaceRunTime,'k-');
-         grid on;
-legend([pr1 ps1 ppc1 psr1],'Gaussian','Subspace','PCA','Achlioptas');
-         hold off;
-         
-               
-         
-         
-
-         
- subspaceIdx=10;
- binCount=100;
- tempSubspace=reshape(normSubT(1,subspaceIdx,:),1,[]);
- tempRP=reshape(normRPT(1,subspaceIdx,:),1,[]);
-  tempPCA=reshape(normPCAT(1,subspaceIdx,:),1,[]);
-% %      [PCANHist, binCenter4]=hist(normPCA,centers);
- tempSRP=reshape(normSRPT(1,subspaceIdx,:),1,[]);
-tempHSubspace=reshape(normHSubT(1,subspaceIdx,:),1,[]);
-figure;   
-ax=axes;
-
- hist(ax,tempSubspace,binCount);
-      title(['Number of projections ',num2str(subspaces(subspaceIdx))]);
-      hold on;
-      hist(ax,tempRP,binCount);
-      hist(ax,tempPCA,binCount);
-   % %      [PCANHist, binCenter4]=hist(normPCA,centers);
-      hist(ax,tempSRP,binCount);
-      hist(ax,tempHSubspace,binCount);
-      h = findobj(ax,'Type','patch');
-            set(h(1),'FaceColor','c','EdgeColor','c','facealpha',0.5,'edgealpha',0.4);
-            set(h(2),'FaceColor','m','EdgeColor','m','facealpha',0.5,'edgealpha',0.4);
-            set(h(3),'FaceColor','g','EdgeColor','g','facealpha',0.5,'edgealpha',0.4);
-            set(h(4),'FaceColor','r','EdgeColor','r','facealpha',0.5,'edgealpha',0.4);
-            set(h(5),'FaceColor','b','EdgeColor','b','facealpha',0.5,'edgealpha',0.4);
-            grid on;
-            legend('subspace','gaussian','PCA','Achlioptas', 'Householder');  
-            hold off;
-            figure;
-      
-      
-      [kdensSub,xSub]=ksdensity(tempSubspace);
-      [kdensRP,xRP]=ksdensity(tempRP);
-      [kdensPCA,xPCA]=ksdensity(tempPCA);
-      [kdensSRP,xSRP]=ksdensity(tempSRP);
-      [kdensHSub,xHSub]=ksdensity(tempHSubspace);
-      subplot(2,2,2)
-      [tempMax,tempX] =  hist(tempSubspace,binCount);
-      tempScale=max(tempMax)/max(kdensSub);
-      
-       plot(xSub,kdensSub*tempScale, 'k-');
-       hold on
-        hist(tempSubspace,binCount);
-       title(['Kernel Density Plot for ',num2str(subspaces(subspaceIdx)),' projections.']);
-
-       %hold on;
- 
-   % %      [PCANHist, binCenter4]=hist(normPCA,centers);
-  
-%      hist(ax,tempHSubspace,binCount);
-
-       subplot(2,2,1)
-        [tempMax,tempX] =  hist(tempRP,binCount);
- tempScale=max(tempMax)/max(kdensRP);
-       plot(xRP,kdensRP*tempScale, 'k-');
-       hold on
-                 hist(tempRP,binCount);
-   
-       subplot(2,2,3)
-          [tempMax,tempX] =  hist(tempPCA,binCount);
- tempScale=max(tempMax)/max(kdensPCA);
-       plot(xPCA,kdensPCA*tempScale, 'k-');
-       hold on
-            hist(tempPCA,binCount);
-       subplot(2,2,4)
-       plot(xSRP,kdensSRP, 'k-');
-       [tempMax,tempX] =  hist(tempSRP,binCount);
- tempScale=max(tempMax)/max(kdensSRP);
-       hold on
-           hist(tempSRP,binCount);
- %      plot(xHSub,kdensHSub, 'c-');
-      
-       
-       
-
-% %       plot(binCenter4,PCANHist, 'm-');
-      grid on;
-         legend('subspace','gaussian','PCA','Achlioptas', 'Householder');
-         hold off;
-
-
-      
-      
-      
-      for fileNo=1:10
-          for k=1:120
-              subspaceStat(fileNo,k,:)=[mean(normPX(fileNo,k,:)) var(normPX(fileNo,k,:)) min(normPX(fileNo,k,:)) max(normPX(fileNo,k,:))];
-              subspaceInt(fileNo,k,:)=prctile(normPX(fileNo,k,:),[5 50 95]);
-          end
-      end
-      
-      
+% 
+% avgRPStat=mean(RPStat,1);
+% avgSRPStat=mean(SRPStat,1);
+% avgSubspaceStat=reshape(mean(subspaceStat,1),clusterCount,subspaceCount,4);
+% %avgHSubspaceStat=reshape(mean(hsubspaceStat,1),clusterCount,subspaceCount,4);
+% %avgPCAStat=mean(PCAStat,1);
+% 
+% avgRPInt=mean(RPInt,1);
+% avgSRPInt=mean(SRPInt,1);
+% avgSubspaceInt=reshape(mean(subspaceInt,1),clusterCount,subspaceCount,3);
+% %avgHSubspaceInt=reshape(mean(hsubspaceInt,1),clusterCount,subspaceCount,3);
+% %avgPCAInt=mean(PCAInt,1);
+% 
+% figure;
+% subplot(2,2,1);
+% pr1=plot(subspaces, avgRPInt(1,:,[1]),'r:');
+% hold on
+% pr2=plot(subspaces, avgRPStat(1,:,1),'r.:');
+% pr3=plot(subspaces, avgRPInt(1,:,[3]),'r:');
+% hold off
+% 
+% subplot(2,2,2);
+% ps1=plot(subspaces, avgSubspaceInt(:,:,[1]),'b:');
+% hold on;
+% ps2=plot(subspaces, avgSubspaceStat(:,:,1),'b+:');
+% ps3=plot(subspaces, avgSubspaceInt(:,:,[3]),'b:');
+% hold off;
+% 
+% subplot(2,2,3);
+% %ppc1=plot(subspaces, avgPCAInt(1,:,[1]),'g:');
+% hold on;
+% %ppc2=plot(subspaces, avgPCAStat(1,:,1),'go:');
+% %ppc3=plot(subspaces, avgPCAInt(1,:,[3]),'g:');
+% hold off;
+% 
+% subplot(2,2,4);
+% psr1=plot(subspaces, avgSRPInt(1,:,[1]),'m:');
+% hold on;
+% psr2=plot(subspaces, avgSRPStat(1,:,1),'mx:');
+% psr3=plot(subspaces, avgSRPInt(1,:,[3]),'m:');
+% hold off;
+% 
+% %phs1=plot(subspaces, avgHSubspaceInt(1,:,[1]),'b:');
+% %phs2=plot(subspaces, avgHSubspaceStat(1,:,1),'b+:');
+% %phs3=plot(subspaces, avgHSubspaceInt(1,:,[3]),'b:');
+% 
+% % %pp1=plot(subspaces, pcaInt(:,[1 3]),'m:');
+% % %pp2=plot(subspaces, pcaInt(:,2),'mx:');
+% 
+% 
+% 
+% 
+%    avgRPRunTime=mean(rpRunTime,1);
+% avgSRPRunTime=mean(srpRunTime,1);
+% avgSubspaceRunTime=mean(subspaceRunTime,1);
+% avgHSubspaceRunTime=mean(hsubspaceRunTime,1);
+% 
+% avgPCARunTime=mean(pcaRunTime,1)+mean(PCATime);
+% figure
+% 
+% pr1=plot(subspaces, avgRPRunTime,'k-s');
+% hold on
+% title(['Runtime vs Projections ']);
+% ps1=plot(subspaces, avgSubspaceRunTime,'k-o');
+% ppc1=plot(subspaces, avgPCARunTime,'k-+');
+% psr1=plot(subspaces, avgSRPRunTime,'k-*');
+% %phs1=plot(subspaces, avgHSubspaceRunTime,'k-');
+%          grid on;
+% legend([pr1 ps1 ppc1 psr1],'Gaussian','Subspace','PCA','Achlioptas');
+%          hold off;
+%          
+%                
+%          
+%          
+% 
+%          
+%  subspaceIdx=10;
+%  binCount=100;
+%  tempSubspace=reshape(normSubT(1,subspaceIdx,:),1,[]);
+%  tempRP=reshape(normRPT(1,subspaceIdx,:),1,[]);
+%   tempPCA=reshape(normPCAT(1,subspaceIdx,:),1,[]);
+% % %      [PCANHist, binCenter4]=hist(normPCA,centers);
+%  tempSRP=reshape(normSRPT(1,subspaceIdx,:),1,[]);
+% tempHSubspace=reshape(normHSubT(1,subspaceIdx,:),1,[]);
+% figure;   
+% ax=axes;
+% 
+%  hist(ax,tempSubspace,binCount);
+%       title(['Number of projections ',num2str(subspaces(subspaceIdx))]);
+%       hold on;
+%       hist(ax,tempRP,binCount);
+%       hist(ax,tempPCA,binCount);
+%    % %      [PCANHist, binCenter4]=hist(normPCA,centers);
+%       hist(ax,tempSRP,binCount);
+%       hist(ax,tempHSubspace,binCount);
+%       h = findobj(ax,'Type','patch');
+%             set(h(1),'FaceColor','c','EdgeColor','c','facealpha',0.5,'edgealpha',0.4);
+%             set(h(2),'FaceColor','m','EdgeColor','m','facealpha',0.5,'edgealpha',0.4);
+%             set(h(3),'FaceColor','g','EdgeColor','g','facealpha',0.5,'edgealpha',0.4);
+%             set(h(4),'FaceColor','r','EdgeColor','r','facealpha',0.5,'edgealpha',0.4);
+%             set(h(5),'FaceColor','b','EdgeColor','b','facealpha',0.5,'edgealpha',0.4);
+%             grid on;
+%             legend('subspace','gaussian','PCA','Achlioptas', 'Householder');  
+%             hold off;
+%             figure;
+%       
+%       
+%       [kdensSub,xSub]=ksdensity(tempSubspace);
+%       [kdensRP,xRP]=ksdensity(tempRP);
+%       [kdensPCA,xPCA]=ksdensity(tempPCA);
+%       [kdensSRP,xSRP]=ksdensity(tempSRP);
+%       [kdensHSub,xHSub]=ksdensity(tempHSubspace);
+%       subplot(2,2,2)
+%       [tempMax,tempX] =  hist(tempSubspace,binCount);
+%       tempScale=max(tempMax)/max(kdensSub);
+%       
+%        plot(xSub,kdensSub*tempScale, 'k-');
+%        hold on
+%         hist(tempSubspace,binCount);
+%        title(['Kernel Density Plot for ',num2str(subspaces(subspaceIdx)),' projections.']);
+% 
+%        %hold on;
+%  
+%    % %      [PCANHist, binCenter4]=hist(normPCA,centers);
+%   
+% %      hist(ax,tempHSubspace,binCount);
+% 
+%        subplot(2,2,1)
+%         [tempMax,tempX] =  hist(tempRP,binCount);
+%  tempScale=max(tempMax)/max(kdensRP);
+%        plot(xRP,kdensRP*tempScale, 'k-');
+%        hold on
+%                  hist(tempRP,binCount);
+%    
+%        subplot(2,2,3)
+%           [tempMax,tempX] =  hist(tempPCA,binCount);
+%  tempScale=max(tempMax)/max(kdensPCA);
+%        plot(xPCA,kdensPCA*tempScale, 'k-');
+%        hold on
+%             hist(tempPCA,binCount);
+%        subplot(2,2,4)
+%        plot(xSRP,kdensSRP, 'k-');
+%        [tempMax,tempX] =  hist(tempSRP,binCount);
+%  tempScale=max(tempMax)/max(kdensSRP);
+%        hold on
+%            hist(tempSRP,binCount);
+%  %      plot(xHSub,kdensHSub, 'c-');
+%       
+%        
+%        
+% 
+% % %       plot(binCenter4,PCANHist, 'm-');
+%       grid on;
+%          legend('subspace','gaussian','PCA','Achlioptas', 'Householder');
+%          hold off;
+% 
+% 
+%       
+%       
+%       
+%       for fileNo=1:10
+%           for k=1:120
+%               subspaceStat(fileNo,k,:)=[mean(normPX(fileNo,k,:)) var(normPX(fileNo,k,:)) min(normPX(fileNo,k,:)) max(normPX(fileNo,k,:))];
+%               subspaceInt(fileNo,k,:)=prctile(normPX(fileNo,k,:),[5 50 95]);
+%           end
+%       end
+%       
+%       
       
       avgStat11=mean(subspaceStat11,1);
       avgStat7=mean(subspaceStat7,1);

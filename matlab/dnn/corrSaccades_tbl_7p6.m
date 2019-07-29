@@ -1,7 +1,16 @@
-diversityMeas.m
+%% Calculates the diversity measures between the PseudoSaccade views
+% Table 1: Sneath rho diversity
+% Table 2: Generalized diversity
+% Table 3: Yule Diversity
+% Table 4: Disagreement Measure
+% Table 5 : Double Fault
+% Table 6 : Interator Agreement
+% Table 7.6 contains the output of table 1
+
 dirnames={'alexnet', 'googlenet', 'resnet50','resnet152'}
 
 subspaces=[450 430 410 390 370 350 330 310 290 270 250 200 150];
+%% Change the below to the number of complete runs available
 directories=1:24;
 kSize=size(subspaces,2);
 dSize=size(directories,2);

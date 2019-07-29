@@ -1,11 +1,11 @@
 
 %Define definition of the run, including range of subspaces, files to run,
 %number of pairs of vectors, window size and number of random windows
-files=dir('*.tiff');
+files=dir('../dataset/images/*.tiff');
 fileCount=size(files,1);
 runCount=1000;
 windSize=50
-subspaces=[5 10 15 20 25 35 50 60 75 100 125 150 200 250 300 350 400 450 500 550 600 650 750];
+subspaces=[5 10];% 15 20 25 35 50 60 75 100 125 150 200 250 300 350 400 450 500 550 600 650 750];
 subspaceCount=size(subspaces,2);
 pairs=100;
 
@@ -47,7 +47,7 @@ scaleFactor2=zeros(fileCount,1);
 for fileNo=1:1:fileCount
 % Loop through each file and store data as a data matrix
 filename=files(fileNo).name
-X=imread(filename);
+X=imread(['../dataset/images/' filename]);
 X=double(X);
 sqrt(max(max(X.^2/mean(mean(X.^2)))))
 
@@ -82,7 +82,7 @@ PCATime(fileNo)=toc;
 %tic
 %dctX=dct(Xvec);
 %toc
-scale=sum(var(Xvec'.^2))*dim/((sum(sum(Xvec.^2))/obs)^2)/4
+%scale=sum(var(Xvec'.^2))*dim/((sum(sum(Xvec.^2))/obs)^2)/4
 scale=sqrt(sum(sum(X.^4))*size(X,1)*size(X,2)/(sum(sum(X.^2)))^2*8);
 X1=reshape(X,1,[]);
 scale2=(size(X1,2)*(max(X1.^2)-min(X1.^2)))/sum(X1.^2);

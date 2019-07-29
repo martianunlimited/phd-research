@@ -30,12 +30,12 @@ U4=0;
 UUT2=0;
 
 
-data=load('madelon_train.data');
-y=load('madelon_train.labels');
-tData=load('madelon_valid.data');
-yTest=load('madelon_valid.labels');
-vData=load('madelon_valid.data');
-yVal=load('madelon_valid.labels');
+data=load('../dataset/UCI/madelon_train.data');
+y=load('../dataset/UCI/madelon_train.labels');
+tData=load('../dataset/UCI/madelon_valid.data');
+yTest=load('../dataset/UCI/madelon_valid.labels');
+vData=load('../dataset/UCI/madelon_valid.data');
+yVal=load('../dataset/UCI/madelon_valid.labels');
 
 d=size(data,2);
 indices=1:d;

@@ -1,4 +1,4 @@
-%% Wrapper to generate the results for figure 4.2
+%% Previous Wrapper to generate the results for figure 4.2, this code have been superceded
 
 prob=[0.01 0.02 0.035 0.05 0.10 0.15 0.25 0.5];
 dim=10000;

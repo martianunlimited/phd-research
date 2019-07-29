@@ -1,13 +1,13 @@
 
 %Define definition of the run, including range of subspaces, files to run,
 %number of pairs of vectors, window size and number of random windows
-files=dir('test*.ogg');
+files=dir('../dataset/audio/test*.ogg');
 fileCount=size(files,1);
-runCount=1000;
+runCount=100;
 windSize=44100;
 subspaces=[1 2 3 4 6 8 12 16 24 32 48 64 96 128 192 256 384 512 768 1024 1536 2048];
 subspaceCount=size(subspaces,2);
-pairs=100;
+pairs=10;
 
 
 
@@ -45,7 +45,7 @@ normHPX=zeros(fileCount,subspaceCount,pairs*(pairs-1)/2);
 for fileNo=1:1:fileCount
 % Loop through each file and store data as a data matrix
 filename=files(fileNo).name
-[y, fs]=audioread(filename);
+[y, fs]=audioread(['../dataset/audio/' filename]);
 X=double(y(:,1));
 sqrt(max(max(X.^2/mean(mean(X.^2)))))
 

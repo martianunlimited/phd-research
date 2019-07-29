@@ -29,7 +29,7 @@ pk=zeros(runCount,kCount);
 U4=0;
 UUT2=0;
 
-fileName='dexter_train.data';
+fileName='../dataset/UCI/dexter_train.data';
         lines = dataread('file', fileName, '%s', 'delimiter', '\n', 'bufsize', 655350);
         obs=length(lines)
         data=zeros(obs,20000);
@@ -44,7 +44,7 @@ fileName='dexter_train.data';
         % Need to remove zero variance indices or it causes problems for the
         % ensemble
         
-fileName='dexter_valid.data';
+fileName='../dataset/UCI/dexter_valid.data';
         lines = dataread('file', fileName, '%s', 'delimiter', '\n', 'bufsize', 655350);
         obs=length(lines)
         tData=zeros(obs,20000);
@@ -67,9 +67,9 @@ data=data(:,nzVarIndex);
 vData=vData(:,nzVarIndex);
 d=size(data,2);
 
-y=load('dexter_train.labels');
-yTest=load('dexter_valid.labels');
-yVal=load('dexter_valid.labels');
+y=load('../dataset/UCI/dexter_train.labels');
+yTest=load('../dataset/UCI/dexter_valid.labels');
+yVal=load('../dataset/UCI/dexter_valid.labels');
 
 %UUT2=mean(sum(wRot.^2.*tData.^2,2)*d);
 baseW=zeros(1,d);

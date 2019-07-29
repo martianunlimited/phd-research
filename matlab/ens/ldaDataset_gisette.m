@@ -30,12 +30,12 @@ U4=0;
 UUT2=0;
 
 
-data=load('gisette_train.data');
-y=load('gisette_train.labels');
-tData=load('gisette_valid.data');
-yTest=load('gisette_valid.labels');
-vData=load('gisette_valid.data');
-yVal=load('gisette_valid.labels');
+data=load('../dataset/UCI/gisette_train.data');
+y=load('../dataset/UCI/gisette_train.labels');
+tData=load('../dataset/UCI/gisette_valid.data');
+yTest=load('../dataset/UCI/gisette_valid.labels');
+vData=load('../dataset/UCI/gisette_valid.data');
+yVal=load('../dataset/UCI/gisette_valid.labels');
 
 d=size(data,2);
 indices=1:d;

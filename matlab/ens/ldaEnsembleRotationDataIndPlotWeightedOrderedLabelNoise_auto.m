@@ -9,12 +9,12 @@ noiseCount=size(labelNoise,2);
 %nouseCount=1;
 thetaCount=size(angles,2);
 kCount=size(subspaces,2);
-ensSize=250;
-d=1000;
+ensSize=25;%0;
+d=100;
 doFlipBase=0;
 testSize=1000;
 valSize=testSize;
-runCount=30;
+runCount=1;
 
 for noiseType=1:3
 RSSBase=zeros(runCount,nCount,noiseCount,sCount,thetaCount);

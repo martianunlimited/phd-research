@@ -1,3 +1,17 @@
+%% Calculates the diversity measures between the base classifier and the saccade views
+% Table 1: correlation based on 1/rank of the classification (pseudo Spearman rank)
+% Table 2: correlation based on the ranks
+% Table 3: Sneath rho diversity on top 1
+% Table 4: Sneath rho diversity on top 3
+% Table 5: Sneath rho diversity on top 5
+% Table 6: Genaralized diversity (on top 1)
+% Table 7: Yule Diversity
+% Table 8: Disagreement Measure
+% Table 9: Double Fault
+% Table 10: Interater agreement
+% Table 7.5 contains the output of table 3
+
+
 dirnames={'alexnet', 'googlenet', 'resnet50','resnet152'}
 
 subspaces=[450 430 410 390 370 350 330 310 290 270 250 200 150];

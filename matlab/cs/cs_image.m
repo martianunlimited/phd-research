@@ -1,36 +1,16 @@
-% tvqc_example.m
-%
-% Test out tvqc code (TV minimization with quadratic constraint).
-%
-% Written by: Justin Romberg, Caltech
-% Email: jrom@acm.caltech.edu
-% Created: October 2005
-%
-
-% use implicit, matrix-free algorithms ?  
-largescale = 1;
-
-path(path, './Optimization');
-path(path, './Measurements');
-path(path, './Data');
-
-
-% test image = 32x32 piece of cameraman's arm
-% load boats
-files=dir('*.tiff');
+files=dir('../dataset/images/*.tiff');
 fileCount=size(files,1);
 
 n = 256;
 N = n*n;
-%X = phantom(n);
-K=[25 100 500 2500 10000 50000]
+K=[25 100 500 2500 10000 50000];
 sizeK=size(K,2);
 mseStat=zeros(fileCount,sizeK,3);
 dctStat=zeros(fileCount,2);
 runTime=zeros(fileCount,sizeK,3);
 for fileNo=1:1:fileCount;
     filename=files(fileNo).name
-    X = double(imread(filename));
+    X = double(imread(['../dataset/images/' filename]));
 [sizeX, sizeY]= size(X);
 offsetX=(sizeX-n)/2;
 offsetY=(sizeY-n)/2;
@@ -45,7 +25,7 @@ x = reshape(X,N,1);
 P = randperm(N)';
 P1=1:N;
 figure
-% num obs
+
 i=0;
 temp=dct(x(P));
 cConst=mean(temp.^4)/(mean(temp.^2)^2);
@@ -57,18 +37,16 @@ dctStat(fileNo,2)=cConst1;
 for kInd=1:sizeK
 k=K(kInd)
 % permutation P and observation set OMEGA
-
-%P=1:N;
 q = randperm(N,k);
 OMEGA = q';
 if k<5000 
     rp=randn(k,N);
 end
-%rp=orth(rp')';
+
 
 
 % measurement matrix
-if (largescale)
+
   A = @(z) A_cg(z, rp,P);
   At = @(z) At_cg(z, N, rp,P);
   As = @(z) A_c(z, OMEGA,P);
@@ -84,16 +62,6 @@ if (largescale)
   x0 = At(b);
   xs0 = Ast(bs);
   xs10 = Ast1(bs);
-else
-  FT = 1/sqrt(N)*fft(eye(N));
-  A = sqrt(2)*[real(FT(OMEGA,:)); imag(FT(OMEGA,:))];
-  A = [1/sqrt(N)*ones(1,N); A];
-  At = [];
-  % observations
-  b = A*x;
-  % initial point
-  x0 = A'*b;
-end
 
 Xbp=reshape(x0,n,n);
 epsilon = 5e-3;
@@ -121,7 +89,7 @@ Xps1 = reshape(xps1, n, n);
 
 mseStat(fileNo,kInd,1)=sqrt(mean((x-xp).^2))/sqrt(mean(x.^2));
 mseStat(fileNo,kInd,2)=sqrt(mean((x-xps).^2))/sqrt(mean(x.^2));
-mseStat(fileNo,kInd,3)=sqrt(mean((x-xps1).^2))/sqrt(mean(x.^2))
+mseStat(fileNo,kInd,3)=sqrt(mean((x-xps1).^2))/sqrt(mean(x.^2));
 
 i=i+1;
 if k<5000

@@ -1,3 +1,10 @@
+%% processResults*.m are helper scripts to ensemble the Saccades using various methods
+% results reported are from processResult_alexNet.m,
+% processResults_GoogLeNet.m, processResults_r50.m and
+% processResults_r152.m 
+% This file prepares the confusion matrix for analysis with analyseResult
+% and classAnalyzer
+
 modelPath = 'data/models/imagenet-googlenet-dag.mat' ;
 lines = dataread('file', 'ILSVRC2012_validation_ground_truth.txt', '%s', 'delimiter', '\n', 'bufsize', 655350);
 obs=length(lines)
