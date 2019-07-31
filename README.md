@@ -27,6 +27,10 @@ Other folders organizes the codes by the chapters they are used in including cod
 ### Utility
 - CreateAxes :- creates a MxN grid of axes according to the dimensions specified and settings specified. Grid has shared legends. Code was written later in the research when it became obvious that manually arranging ~1000 figures was distracting from more productive work
 - HouseHolder_nv :- defines the householder normal vector with chracteristics specified by vector v. Implements Algorithms C.1
+- binRandGen : generates non-i.i.d binary vectors with specific "densities"
+- cummBinnProb : cdf calculator for binomial distributions
+- cummPolyaProb : calculates majority vote ensemble accuracy as per P.E. distribution
+- rand* : Generates various random projections
 
 ### JLL - Chapter 4
 Codes in this folder requires the images, audio, and UCI-DOROTHEA datasets 
@@ -47,11 +51,21 @@ Codes in this folder requires the images and audio dataset, as well as L1-Magic
 
 ### FP - Chapter 5
 - badFlipWrapper : Wrapper around badFlip_ for organizing the flipping probability and plotting the figures 
-- fpEnsExeriment
+- fpEnsExeriment : Simulates how flipping probability relates to ensembles and a simulation of an Ensemble of RS projection on the Bayes' classifier
 
 ### Ens - Chapter 6
+- ldaEnsembleRotationDataIndPlotWeightedOrderedLabelNoise_auto : Generates synthetic testcases used in chapter 5
+- ldaDataset_* : runs experiment on UCI datasets 
 
 ### DNN - Chapter 7
+- cnn_imagenet_* : Runs experiments on the corresponding DNN
+- process_results_* : ensembles the results of the PseudoSaccade views using majority vote
+  - process_results_borda : experiment with a borda count ensemble 
+  - process_results_confMat : generates confusion matrix for additional analysis
+- corrBase_tbl_7p5 : Calculates diversity measure between base and the pseudosaccade view
+- corrSaccade_tbl_7p6 : Calculates diversity measure between the pseudosaccades view
 
 ## Python
-These are helper scripts for processing and training neural network, required modules include numpy, scipy, matplotlib, keras, tensorflow.
+These are helper scripts for processing and training neural network, required modules include numpy, scipy, matplotlib, keras, tensorflow, Foolbox
+- adverseAttack - generate Foolbox adversarial examples, requires Foolbox
+- ensExp* - various neural network experiments on the ensembles
